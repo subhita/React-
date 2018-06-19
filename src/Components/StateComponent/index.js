@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Lists from './List';
 
-export default class ListContact extends Component{
+export default class StateComponent extends Component{
     state = {
         contacts: [
             {
@@ -24,10 +24,15 @@ export default class ListContact extends Component{
             }
           ]
     }
+    removeContact = (contact) => {
+        this.setState((state) => ({
+         contacts: state.contacts.filter((c) => c.id !== contact.id)
+        }))
+    }
     render(){
         return(
             <div className="list-contact">
-            <Lists contacts={this.state.contacts} />
+            <Lists onDeleteContact={this.removeContact} contacts={this.state.contacts} />
             </div>
         );
     }
