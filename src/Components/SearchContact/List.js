@@ -10,14 +10,21 @@ export default class Lists extends Component{
     updateQuery =(query) => {
         this.setState({query: query.trim() })
     }
+
+    clearQuery =() => {
+        this.setState({query: ''})
+    }
     render(){
         // console.log('Props', this.props)
+        const { contacts, onDeleteContact} = this.props
+        const { query } = this.state
+
         let showingContacts
-        if (this.state.query) {
-            const match = new RegExp(escapeRegExp(this.state.query), 'i')
-            showingContacts = this.props.contacts.filter((contact) => match.test(contact.name))
+        if (query) {
+            const match = new RegExp(escapeRegExp(query), 'i')
+            showingContacts = contacts.filter((contact) => match.test(contact.name))
         } else {
-            showingContacts = this.props.contacts
+            showingContacts = contacts
         }
 
         showingContacts.sort(sortBy('name'))
@@ -29,10 +36,16 @@ export default class Lists extends Component{
               className='search'
               type='text'
               placeholder='Search contacts'
-              value={this.state.query}
+              value={query}
               onChange={(event) => this.updateQuery(event.target.value)} 
               />
             </div>
+            {showingContacts.length !== contacts.length && (
+                <div className="showing-contact">
+                    <span>Now showing {showingContacts.length} of {contacts.length} total</span>
+                    <button onClick={this.clearQuery}>Show All</button>
+                </div>
+            )}
             <ol className="lists">
             {showingContacts.map((list) => (
                 <li key={list.id} className='contact-list-item'>
@@ -43,7 +56,7 @@ export default class Lists extends Component{
                         <p>{list.name}</p>
                         <p>{list.email}</p>
                     </div>
-                    <button onClick={() => this.props.onDeleteContact(list)} className='contact-remove'>
+                    <button onClick={() => onDeleteContact(list)} className='contact-remove'>
                       Remove
                     </button>
                 </li>
