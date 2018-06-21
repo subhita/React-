@@ -16,8 +16,8 @@ class App extends Component {
       {/* <ListContact /> */}
       {/* <FunctionalComponent /> */}
       {/* <StateComponent /> */}
-      <SearchContact />
-      {/* <ComponentLifyCycle /> */}
+      {/* <SearchContact /> */}
+      <ComponentLifyCycle />
       </div>
       </BrowserRouter>
     );

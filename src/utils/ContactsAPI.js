@@ -1,4 +1,4 @@
-const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3000'
+const api = 'http://localhost:3000'
 
 let token = localStorage.token
 
@@ -13,7 +13,6 @@ const headers = {
 export const getAll = () =>
   fetch(`${api}/contacts`, { headers })
     .then(res => res.json())
-    .then(data => data.contacts)
 
 export const remove = (contact) =>
   fetch(`${api}/contacts/${contact.id}`, { method: 'DELETE', headers })
